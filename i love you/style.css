@@ -1,0 +1,57 @@
+/* Cài đặt cơ bản cho trang */
+body {
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    place-items: center; /* Căn giữa mọi thứ */
+    background-color: #000; /* Nền đen */
+    overflow: hidden; /* Giấu thanh cuộn */
+}
+
+#ui {
+    position: relative;
+}
+
+/* === BẮT ĐẦU CODE TỪ TRONG ẢNH (và phần bị thiếu) === */
+
+/* Đây là LỚP CHỨA (container) cho mỗi chữ */
+/* Nó chịu trách nhiệm định vị và nhận delay animation */
+#ui .love_horizontal {
+    position: absolute; /* Đây là phần CSS quan trọng bị giấu! */
+    
+    /* 'top' và 'left' sẽ được JavaScript tự động thêm vào 
+      để tạo thành hình trái tim.
+    */
+    
+    /* Đây là phần code trong ảnh */
+    animation: horizontal 10000ms infinite alternate ease-in-out;
+    animation-delay: calc(var(--i) * -300ms); /* Biến --i sẽ được JS thêm vào */
+}
+
+/* Đây là BẢN THÂN CHỮ "I Love You" */
+#ui .love_word {
+    /* Đây là phần code trong ảnh */
+    color: #ea80b0;
+    font-size: 1.4rem;
+    transform: translateY(-100%) rotateZ(-30deg);
+    text-shadow: 0 0 10px #fff;
+    letter-spacing: 2px;
+    white-space: nowrap;
+
+    /* Thêm các thuộc tính cho đẹp hơn */
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+}
+
+/* Đây là ĐỊNH NGHĨA ANIMATION 'horizontal' BỊ THIẾU
+  Tên 'horizontal' hơi khó hiểu, nhưng nó tạo hiệu ứng "thở"
+  hoặc "lắc lư" qua lại.
+*/
+@keyframes horizontal {
+    0% {
+        transform: translateX(-8px) scale(0.95);
+    }
+    100% {
+        transform: translateX(8px) scale(1.05);
+    }
+}
