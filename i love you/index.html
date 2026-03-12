@@ -3,12 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hiệu ứng Trái Tim CSS</title>
+    <title>🎉 Chúc Mừng Sinh Nhật Nam Phương 🎂</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="ui"></div>
+    <!-- Nút mở nhạc -->
+    <button id="musicBtn" class="music-btn">🎵 Bật Nhạc</button>
     
+    <!-- Nhạc nền (bạn có thể thay link bằng file nhạc của riêng bạn) -->
+    <audio id="birthdayMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Lớp phủ chào mừng -->
+    <div id="welcomeOverlay" class="welcome-overlay">
+        <div class="welcome-content">
+            <h1 class="welcome-title">🎊 Nhấn để bắt đầu 🎊</h1>
+            <div class="welcome-subtitle">Một điều đặc biệt dành cho Nam Phương</div>
+        </div>
+    </div>
+
+    <!-- Container chính -->
+    <div class="container">
+        <!-- Tiêu đề sinh nhật -->
+        <div class="birthday-header">
+            <h1 class="main-title">
+                <span class="letter">C</span>
+                <span class="letter">H</span>
+                <span class="letter">Ú</span>
+                <span class="letter">C</span>
+                <span class="letter"> </span>
+                <span class="letter">M</span>
+                <span class="letter">Ừ</span>
+                <span class="letter">N</span>
+                <span class="letter">G</span>
+            </h1>
+            <h2 class="sub-title">
+                <span class="letter-2">S</span>
+                <span class="letter-2">I</span>
+                <span class="letter-2">N</span>
+                <span class="letter-2">H</span>
+                <span class="letter-2"> </span>
+                <span class="letter-2">N</span>
+                <span class="letter-2">H</span>
+                <span class="letter-2">Ậ</span>
+                <span class="letter-2">T</span>
+            </h2>
+            <h1 class="name-title">
+                <span class="letter-3">✨ Nam Phương ✨</span>
+            </h1>
+        </div>
+
+        <!-- Khu vực ảnh -->
+        <div class="photo-section">
+            <div class="photo-container">
+                <div class="photo-frame">
+                    <img src="https://via.placeholder.com/300x300/FF69B4/FFFFFF?text=Nam+Phuong" alt="Nam Phương" class="photo">
+                    <div class="photo-overlay">💝</div>
+                </div>
+                <p class="photo-caption">Thay ảnh này bằng ảnh của Nam Phương nhé! 📸</p>
+            </div>
+        </div>
+
+        <!-- Lời chúc -->
+        <div class="wishes-section">
+            <div class="wish-card">
+                <div class="wish-icon">🎂</div>
+                <p class="wish-text">Chúc bạn tuổi mới tràn đầy niềm vui và hạnh phúc!</p>
+            </div>
+            <div class="wish-card">
+                <div class="wish-icon">🌟</div>
+                <p class="wish-text">Luôn tỏa sáng và thành công trong mọi điều!</p>
+            </div>
+            <div class="wish-card">
+                <div class="wish-icon">💖</div>
+                <p class="wish-text">Mãi yêu và được yêu thương!</p>
+            </div>
+        </div>
+
+        <!-- Bánh sinh nhật -->
+        <div class="cake-container">
+            <div class="cake">
+                <div class="candle">
+                    <div class="flame"></div>
+                </div>
+                <div class="cake-layer layer-3"></div>
+                <div class="cake-layer layer-2"></div>
+                <div class="cake-layer layer-1"></div>
+            </div>
+            <p class="cake-text">Thổi nến đi nào! 🎉</p>
+        </div>
+    </div>
+
+    <!-- Bóng bay -->
+    <div id="balloons"></div>
+
+    <!-- Pháo hoa/Confetti -->
+    <canvas id="confetti"></canvas>
+
     <script src="cript.js"></script>
 </body>
 </html>

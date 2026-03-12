@@ -1,57 +1,415 @@
-/* Cài đặt cơ bản cho trang */
-body {
+* {
     margin: 0;
-    height: 100vh;
-    display: grid;
-    place-items: center; /* Căn giữa mọi thứ */
-    background-color: #000; /* Nền đen */
-    overflow: hidden; /* Giấu thanh cuộn */
+    padding: 0;
+    box-sizing: border-box;
 }
 
-#ui {
+body {
+    font-family: 'Comic Sans MS', 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    min-height: 100vh;
+    overflow-x: hidden;
     position: relative;
 }
 
-/* === BẮT ĐẦU CODE TỪ TRONG ẢNH (và phần bị thiếu) === */
-
-/* Đây là LỚP CHỨA (container) cho mỗi chữ */
-/* Nó chịu trách nhiệm định vị và nhận delay animation */
-#ui .love_horizontal {
-    position: absolute; /* Đây là phần CSS quan trọng bị giấu! */
-    
-    /* 'top' và 'left' sẽ được JavaScript tự động thêm vào 
-      để tạo thành hình trái tim.
-    */
-    
-    /* Đây là phần code trong ảnh */
-    animation: horizontal 10000ms infinite alternate ease-in-out;
-    animation-delay: calc(var(--i) * -300ms); /* Biến --i sẽ được JS thêm vào */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-/* Đây là BẢN THÂN CHỮ "I Love You" */
-#ui .love_word {
-    /* Đây là phần code trong ảnh */
-    color: #ea80b0;
-    font-size: 1.4rem;
-    transform: translateY(-100%) rotateZ(-30deg);
-    text-shadow: 0 0 10px #fff;
-    letter-spacing: 2px;
-    white-space: nowrap;
+/* === NÚT NHẠC === */
+.music-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
 
-    /* Thêm các thuộc tính cho đẹp hơn */
-    font-family: 'Arial', sans-serif;
+.music-btn:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+}
+
+.music-btn.playing {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* === LỚP PHỦ CHÀO MỪNG === */
+.welcome-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    cursor: pointer;
+    transition: opacity 0.5s ease;
+}
+
+.welcome-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.welcome-content {
+    text-align: center;
+    color: white;
+}
+
+.welcome-title {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+}
+
+.welcome-subtitle {
+    font-size: 1.5rem;
+    opacity: 0.8;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* === CONTAINER CHÍNH === */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 10;
+}
+
+/* === TIÊU ĐỀ SINH NHẬT === */
+.birthday-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.main-title, .sub-title, .name-title {
+    margin: 20px 0;
+}
+
+.main-title {
+    font-size: 4rem;
+    color: #fff;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.sub-title {
+    font-size: 3rem;
+    color: #ffe66d;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.name-title {
+    font-size: 3.5rem;
+    color: #ff6b9d;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+    margin-top: 30px;
+}
+
+.letter, .letter-2, .letter-3 {
+    display: inline-block;
+    animation: wave 1.5s ease-in-out infinite;
+}
+
+.letter { animation-delay: calc(var(--i) * 0.1s); }
+.letter-2 { animation-delay: calc(var(--i) * 0.1s + 0.5s); }
+.letter-3 { 
+    animation: rainbow 3s infinite, float 3s ease-in-out infinite;
+}
+
+@keyframes wave {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(5deg); }
+    75% { transform: translateY(-10px) rotate(-5deg); }
+}
+
+@keyframes rainbow {
+    0% { color: #ff6b9d; }
+    33% { color: #ffe66d; }
+    66% { color: #4ecdc4; }
+    100% { color: #ff6b9d; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+}
+
+/* === KHU VỰC ẢNH === */
+.photo-section {
+    display: flex;
+    justify-content: center;
+    margin: 60px 0;
+}
+
+.photo-container {
+    text-align: center;
+}
+
+.photo-frame {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 8px solid #fff;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: photoRotate 20s linear infinite;
+}
+
+@keyframes photoRotate {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(-5deg) scale(1.05); }
+    50% { transform: rotate(0deg) scale(1.1); }
+    75% { transform: rotate(5deg) scale(1.05); }
+}
+
+.photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 107, 157, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.photo-frame:hover .photo-overlay {
+    opacity: 1;
+}
+
+.photo-caption {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* === LỜI CHÚC === */
+.wishes-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin: 60px 0;
+}
+
+.wish-card {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    animation: fadeInUp 0.8s ease;
+}
+
+.wish-card:hover {
+    transform: translateY(-10px) scale(1.05);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wish-icon {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+}
+
+.wish-text {
+    font-size: 1.3rem;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* === BÁNH SINH NHẬT === */
+.cake-container {
+    text-align: center;
+    margin: 80px 0;
+}
+
+.cake {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.cake-layer {
+    width: 200px;
+    height: 60px;
+    border-radius: 10px;
+    position: relative;
+    margin: 0 auto 5px;
+}
+
+.layer-1 {
+    background: linear-gradient(to bottom, #ff6b9d 0%, #c44569 100%);
+    width: 250px;
+}
+
+.layer-2 {
+    background: linear-gradient(to bottom, #ffe66d 0%, #f4a261 100%);
+    width: 220px;
+}
+
+.layer-3 {
+    background: linear-gradient(to bottom, #4ecdc4 0%, #2a9d8f 100%);
+    width: 180px;
+}
+
+.candle {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 40px;
+    background: linear-gradient(to bottom, #fff 0%, #ffe66d 50%, #ff6b9d 100%);
+    border-radius: 5px 5px 0 0;
+}
+
+.flame {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 15px;
+    height: 25px;
+    background: #ff6b00;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: flicker 0.3s infinite alternate;
+    box-shadow: 0 0 20px #ff6b00, 0 0 40px #ff6b00;
+}
+
+@keyframes flicker {
+    0% { transform: translateX(-50%) scale(1) translateY(0); }
+    100% { transform: translateX(-50%) scale(1.1) translateY(-3px); }
+}
+
+.cake-text {
+    font-size: 1.8rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     font-weight: bold;
 }
 
-/* Đây là ĐỊNH NGHĨA ANIMATION 'horizontal' BỊ THIẾU
-  Tên 'horizontal' hơi khó hiểu, nhưng nó tạo hiệu ứng "thở"
-  hoặc "lắc lư" qua lại.
-*/
-@keyframes horizontal {
+/* === BÓNG BAY === */
+.balloon {
+    position: fixed;
+    bottom: -150px;
+    width: 80px;
+    height: 100px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: floatUp 8s ease-in infinite;
+    z-index: 5;
+}
+
+@keyframes floatUp {
     0% {
-        transform: translateX(-8px) scale(0.95);
+        bottom: -150px;
+        opacity: 1;
     }
     100% {
-        transform: translateX(8px) scale(1.05);
+        bottom: 100vh;
+        opacity: 0;
     }
 }
+
+/* === CANVAS PHÁO HOA === */
+#confetti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    .main-title { font-size: 2.5rem; }
+    .sub-title { font-size: 2rem; }
+    .name-title { font-size: 2.5rem; }
+    .photo-frame { width: 250px; height: 250px; }
+    .wishes-section { grid-template-columns: 1fr; }
+    .cake-layer.layer-1 { width: 200px; }
+    .cake-layer.layer-2 { width: 170px; }
+    .cake-layer.layer-3 { width: 140px; }
+}
+
+/* Tạo hiệu ứng động cho các chữ */
+.letter:nth-child(1) { --i: 0; }
+.letter:nth-child(2) { --i: 1; }
+.letter:nth-child(3) { --i: 2; }
+.letter:nth-child(4) { --i: 3; }
+.letter:nth-child(5) { --i: 4; }
+.letter:nth-child(6) { --i: 5; }
+.letter:nth-child(7) { --i: 6; }
+.letter:nth-child(8) { --i: 7; }
+.letter:nth-child(9) { --i: 8; }
+
+.letter-2:nth-child(1) { --i: 0; }
+.letter-2:nth-child(2) { --i: 1; }
+.letter-2:nth-child(3) { --i: 2; }
+.letter-2:nth-child(4) { --i: 3; }
+.letter-2:nth-child(5) { --i: 4; }
+.letter-2:nth-child(6) { --i: 5; }
+.letter-2:nth-child(7) { --i: 6; }
+.letter-2:nth-child(8) { --i: 7; }
+.letter-2:nth-child(9) { --i: 8; }
